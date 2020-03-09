@@ -1,0 +1,10 @@
+http://cs231n.github.io/python-numpy-tutorial/
+
+https://numpy.org/devdocs/user/quickstart.html
+
+https://www.sharpsightlabs.com/blog/numpy-axes-explained/
+
+https://www.learndatasci.com/tutorials/python-pandas-tutorial-complete-introduction-for-beginners/
+
+https://www.learndatasci.com/tutorials/data-science-statistics-using-python/
+
