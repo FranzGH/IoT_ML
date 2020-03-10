@@ -1,6 +1,9 @@
 import numpy as np
-from numpy import random as ran
-a = np.floor(10*ran.random((3,4)))
+
+from numpy.random import Generator, PCG64
+a = np.ones((2,3), dtype=int)
+rg = Generator(PCG64())
+a = rg.standard_normal((2,3))
 print(a)
 print(a.shape)
 
@@ -23,8 +26,8 @@ a = a.reshape(3,-1)
 print(a)
 
 print('Stacking together different arrays')
-a = np.floor(10*ran.random((2,2)))
-b = np.floor(10*ran.random((2,2)))
+a = np.floor(10*rg.standard_normal((2,2))))
+b = np.floor(10*rg.standard_normal((2,2))))
 c = np.vstack((a,b))
 print(c)
 c = np.hstack((a,b))

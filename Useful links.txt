@@ -8,3 +8,9 @@ https://www.learndatasci.com/tutorials/python-pandas-tutorial-complete-introduct
 
 https://www.learndatasci.com/tutorials/data-science-statistics-using-python/
 
+---
+Domande/dubbi
+
+Resettare il workspace: 
+https://stackoverflow.com/questions/3543833/how-do-i-clear-all-variables-in-the-middle-of-a-python-script
+

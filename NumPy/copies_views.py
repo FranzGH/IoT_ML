@@ -14,7 +14,7 @@ def f(x):
     print(id(x))     # id is a unique identifier of an object
 
 print(id(a))
-f(a)
+print(f(a)) # same value, because the object is the same (copied reference, not object)
 
 #Different array objects can share the same data.
 # The view method creates a new array object that looks at the same data.

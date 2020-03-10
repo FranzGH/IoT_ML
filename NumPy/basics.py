@@ -3,7 +3,7 @@ import numpy as np
 a = np.arange(15).reshape(3, 5)
 print(a)
 print(a.shape)
-print(a.ndim)
+print(a.ndim) #2
 print(a.dtype.name) #'int32'
 print(a.itemsize) #size in byte of each item
 print(a.size)
@@ -23,7 +23,8 @@ print(a)
 a = np.ones( (2,3,4), dtype=np.int16 )
 print(a)
 
-# To create sequences of numbers, NumPy provides the arange function which is analogous to the Python built-in range, but returns an array.
+# To create sequences of numbers, NumPy provides the arange function which is analogous to the Python built-in range,
+# but returns an array.
 a = np.arange( 10, 30, 5 )
 print(a)
 
@@ -61,9 +62,10 @@ print(A * B)
 print(A @ B)
 print(A.dot(B))
 
-from numpy import random as ran
+from numpy.random import Generator, PCG64
+rg = Generator(PCG64())
 a = np.ones((2,3), dtype=int)
-b = ran.random((2,3))
+b = rg.standard_normal((2,3))
 a *= 3
 b += a
 print(b)
@@ -81,7 +83,7 @@ print(c.dtype.name)
 
 # Many unary operations, such as computing the sum of all the elements in the array,
 # are implemented as methods of the ndarray class.
-a = ran.random((2,3))
+a = rg.standard_normal((2,3))
 print(a.sum())
 print(a.min())
 print(a.max())
