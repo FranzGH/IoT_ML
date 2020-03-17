@@ -37,3 +37,4 @@ print(c)
 
 #.... missing
 
+print(np.row_stack is np.vstack) #True

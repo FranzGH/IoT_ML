@@ -8,6 +8,18 @@ https://www.learndatasci.com/tutorials/python-pandas-tutorial-complete-introduct
 
 https://www.learndatasci.com/tutorials/data-science-statistics-using-python/
 
+https://www.dataquest.io/blog/sci-kit-learn-tutorial/
+
+https://lorenzogovoni.com/naive-bayes/
+
+https://blog.statsbot.co/support-vector-machines-tutorial-c1618e635e93
+
+https://towardsdatascience.com/accuracy-precision-recall-or-f1-331fb37c5cb9
+
+https://scikit-learn.org/stable/tutorial/basic/tutorial.html
+
+https://scikit-learn.org/stable/auto_examples/classification/plot_digits_classification.html#sphx-glr-auto-examples-classification-plot-digits-classification-py
+
 ---
 Domande/dubbi
 
