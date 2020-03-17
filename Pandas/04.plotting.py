@@ -37,6 +37,9 @@ title_boxplot = 'Revenue millions by Rating category'
 plt.title( title_boxplot )
 plt.suptitle('') # that's what you're after
 plt.show()
-#movies_df['rating'].plot(kind='chart', title='Rating')
+
+# Plot a categorical variable
+#movies_df['rating'].plot(kind='chart', title='Rating') # ValueError: chart is not a valid plot kind
+#movies_df['rating_category'].plot(kind='hist', title='Rating category') # TypeError: no numeric data to plot
 movies_df['rating_category'].value_counts().plot(kind='bar', title='Rating category')
 plt.show()
