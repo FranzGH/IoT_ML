@@ -1,5 +1,6 @@
-# https://www.dataquest.io/blog/sci-kit-learn-tutorial/
+# 3_
 
+# https://www.dataquest.io/blog/sci-kit-learn-tutorial/
 
 #import the necessary module
 from sklearn import preprocessing

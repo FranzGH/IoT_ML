@@ -14,6 +14,7 @@ print("Naive-Bayes accuracy : ",accuracy_score(tts.target_test, pred, normalize 
 # https://towardsdatascience.com/accuracy-precision-recall-or-f1-331fb37c5cb9
 from sklearn.metrics import confusion_matrix
 cf = confusion_matrix(tts.target_test, pred)
+print(f'Confusion matrix: {cf}')
 lpp = cf[0,1] + cf[1,1]
 lap = cf[1,0] + cf[1,1]
 lp = cf[1,1]/lpp

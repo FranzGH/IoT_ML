@@ -8,11 +8,14 @@ print(digits.target)
 
 from sklearn import svm
 clf = svm.SVC(gamma=0.001, C=100.)
-clf.fit(digits.data[:-1], digits.target[:-1])
-print(clf.predict(digits.data[-1:]))
+clf.fit(digits.data[:-1], digits.target[:-1]) # Train on all but the last item from digits.data
+print(clf.predict(digits.data[-1:])) # Test last item
 #predict() returns an array, because it could be fed with an array
 
+###
 # Model persistence
+###
+
 from sklearn import svm
 from sklearn import datasets
 clf = svm.SVC(gamma = 'scale') # To avoid a future warning
@@ -30,11 +33,13 @@ print(y[0])
 from joblib import dump, load
 dump(clf, 'filename.joblib') 
 clf = load('filename.joblib') 
-
+####
 # Conventions
+####
 import numpy as np
 from sklearn import random_projection
 
+# Type casting
 rng = np.random.RandomState(0)
 X = rng.rand(10, 2000)
 print(X)
@@ -43,6 +48,7 @@ print(X.dtype)
 X = np.array(X, dtype='float32')
 print(X.dtype)
 
+###
 # Reduce dimensionality through Gaussian random projection
 # https://en.wikipedia.org/wiki/Random_projection
 transformer = random_projection.GaussianRandomProjection()
@@ -70,7 +76,9 @@ print(len(iris.target))
 print(iris.target_names)
 print(len(iris.target_names))
 
-# Updating parameters and refitting teh model
+###
+# Updating parameters and refitting the model (with different kernels)
+###
 X, y = datasets.load_iris(return_X_y=True)
 clf = SVC(gamma='scale')
 clf.set_params(kernel='linear').fit(X, y)
@@ -78,7 +86,9 @@ print(clf.predict(X[:5]))
 clf.set_params(kernel='rbf').fit(X, y)
 print(clf.predict(X[:5]))
 
+#####
 # Multiclass
+#####
 from sklearn.multiclass import OneVsRestClassifier
 
 X = [[1, 2], [2, 4], [4, 5], [3, 2], [3, 1], [3,3], [4,2]]
