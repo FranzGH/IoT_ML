@@ -6,7 +6,7 @@
 
 import numpy as np
 import pandas as pd
-'''
+
 from sklearn.datasets import load_iris
 import seaborn as sns; sns.set(color_codes=True)
 from mpl_toolkits.mplot3d import Axes3D
@@ -100,7 +100,7 @@ Z = Z.reshape(xx.shape)
 plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
 plt.scatter(X[:,0],X[:,1],c=Y,s=10)
 plt.show()
-'''
+
 
 #######
 # Out-of-core training - Partial fit
