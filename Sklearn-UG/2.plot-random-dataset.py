@@ -9,7 +9,7 @@ from sklearn.datasets import make_classification
 from sklearn.datasets import make_blobs
 from sklearn.datasets import make_gaussian_quantiles
 
-plt.figure(figsize=(8, 8))
+plt.figure(figsize=(15, 15))
 plt.subplots_adjust(bottom=.05, top=.9, left=.05, right=.95)
 
 plt.subplot(321)

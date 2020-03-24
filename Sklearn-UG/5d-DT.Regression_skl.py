@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 rng = np.random.RandomState(1)
 X = np.sort(5 * rng.rand(80, 1), axis=0) # Values from 0  to 5, N.B., X must be a matrix
 y = np.sin(X).ravel() #flattened array
-y[::5] += 3 * (0.5 - rng.rand(16)) # Every 5, 1 is added with noise
+y[::5] += 3 * (0.5 - rng.rand(16)) # Every 5 samples, 1 is added with noise
 
 # Fit regression model
 regr_1 = DecisionTreeRegressor(max_depth=2)

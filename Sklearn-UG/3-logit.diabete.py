@@ -62,7 +62,7 @@ print("Recall:",metrics.recall_score(y_test, y_pred))
 
 # Roc curve, true positive vs false negative
 pred_prob = logreg.predict_proba(X_test) # For each sample, probabilities of each class
-#y_pred_proba = pred_prob[::,1]
+#y_pred_proba = pred_prob[::,1] # cfr. y[::5] += 3 * (0.5 - rng.rand(16)) # Every 5 samples, 1 is added with noise
 y_pred_proba = pred_prob[:,1]
 fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba)
 auc = metrics.roc_auc_score(y_test, y_pred_proba)

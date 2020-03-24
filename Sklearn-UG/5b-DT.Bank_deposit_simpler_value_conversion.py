@@ -1,5 +1,11 @@
 # https://github.com/suvoooo/Machine_Learning/blob/master/DecsTree/notebooks/Bank_Data_Analysis.ipynb
 
+# References
+# https://victorzhou.com/blog/information-gain/ 
+# https://towardsdatascience.com/entropy-how-decision-trees-make-decisions-2946b9c18c8 
+# https://blog.quantinsti.com/gini-index/ (example with binary features)
+
+
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -263,7 +269,3 @@ plt.ylabel("Feature Importance", fontsize=14)
 plt.savefig("Feature_Importance.png", dpi=300, bbox_inches='tight')# xticks are not clipped with 'bbox'
 
 
-# References
-# https://victorzhou.com/blog/information-gain/ 
-# https://blog.quantinsti.com/gini-index/ (example with binary features)
-# https://towardsdatascience.com/entropy-how-decision-trees-make-decisions-2946b9c18c8 

@@ -36,6 +36,7 @@ print ("Regression value: ",r2_score(y_pred, y_test))
 print('Coefficients: \n', reg.coef_)
 print('Intercept: \n', reg.intercept_)
 
+plt.figure(figsize=(8, 8))
 plt.scatter(X_test, y_test)
 plt.plot(X_test, y_pred, color='blue', linewidth=3)
 #plt.plot([5,2,4], [20,5,80], color='red', linewidth=1) #JUst as an example...
