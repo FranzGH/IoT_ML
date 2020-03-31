@@ -12,7 +12,7 @@ print (bank_df.head(3))
 print ("\n")
 print ("list of attributes: ", list(bank_df.columns))
 print ("\n")
-print ("total number of attributes: ", len(list(bank_df.columns))-1)
+print ("total number of attributes: ", len(list(bank_df.columns))-1) # Not counting the label, deposit
 print ("shape of datafrmae: ", bank_df.shape)
 
 ### dataset is biased more towards no .. 
@@ -24,16 +24,17 @@ plt.show()
 print("total number of no : ", len(bank_df[bank_df['deposit']=='no']))
 print("total number of yes : ", len(bank_df[bank_df['deposit']=='yes']))
 
-# poutcome: outcome of the previous marketing campaign (categorical: 'failure','nonexistent','success')
+# poutcome: outcome of the previous marketing campaign (categorical: 'unknown','other','failure','success')
 sns.countplot(x='poutcome', data=bank_df, palette='summer_r')
 plt.xlabel('Poutcome', fontsize=13)
 plt.ylabel('Count', fontsize=12)
+plt.show()
 
 # depo is the target variable
 depo = ['yes', 'no']
 sel_list = ['age', 'balance']
 
-yes_depo = bank_df[bank_df['deposit']=='yes']
+yes_depo = bank_df[bank_df['deposit']=='yes'] # Two sub-datasets
 no_depo = bank_df[bank_df['deposit']=='no']
 
 h_age_yes = list(yes_depo['age'])
@@ -44,8 +45,7 @@ h_bal_no = list(no_depo['balance']/1000)
 
 plt.figure(figsize=(10, 5))
 plt.subplot(1, 2, 1)
-
-plt.hist([h_age_no, h_age_yes], density=True, label=depo, alpha=0.6, bins=range(5, 95), linewidth=1.3)
+plt.hist([h_age_no, h_age_yes], density=True, label=depo, alpha=0.6, bins=range(5, 95), linewidth=1.3) # the range of the bins, the label of the two histograms
 plt.xlabel('Age', fontsize=12)
 plt.legend(fontsize=12)
 
@@ -67,6 +67,7 @@ g1.set_xticklabels(rotation=45)
 g2 = sns.catplot(x='marital', hue='deposit', data=bank_df, kind='count')
 plt.xlabel('Marital')
 g3 = sns.catplot(x='housing', kind='count', hue='deposit', data=bank_df)
+plt.show()
 
 plt.figure(figsize=(15, 7))
 # sns.set(font_scale=1.2)

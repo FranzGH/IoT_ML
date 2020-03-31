@@ -37,3 +37,16 @@ sample_one_pred = int(tree.predict([[5, 5, 1, 3]]))
 sample_two_pred = int(tree.predict([[5, 5, 2.6, 1.5]]))
 print(f"The first sample most likely belongs a {iris.target_names[sample_one_pred]} flower.")
 print(f"The second sample most likely belongs a {iris.target_names[sample_two_pred]} flower.")
+
+# Closing remarks
+# The real power of decision trees unfolds more so when cultivating many of them — while limiting the way they grow — and
+# collecting their individual predictions to form a final conclusion.
+# In other words, you grow a forest, and if your forest is random in nature,
+# using the concept of bagging and with splitter = "random", we call this a Random Forest.
+
+# splitter: This is how the decision tree searches the features for a split.
+# The default value is set to “best”. That is, for each node, the algorithm considers all the features and chooses the best split.
+# If you decide to set the splitter parameter to “random,” then a random subset of features will be considered.
+
+# Regularization parameters
+# Not limiting the growth of a decision tree may lead to over-fitting.
