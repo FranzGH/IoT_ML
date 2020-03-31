@@ -5,10 +5,16 @@ import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.tree import DecisionTreeClassifier
 
+'''
 # Load data and store it into pandas DataFrame objects
+# pylint: disable=no-member
 iris = load_iris()
 X = pd.DataFrame(iris.data[:, :], columns = iris.feature_names[:])
 y = pd.DataFrame(iris.target, columns =["Species"])
+'''
+iris = pd.read_csv('datasets/iris.csv', skiprows=1)
+X = pd.DataFrame(iris.values[:,:-1])
+y = pd.DataFrame(iris.values[:,-1], columns =["Species")
 
 # Defining and fitting a DecisionTreeClassifier instance
 tree = DecisionTreeClassifier(max_depth = 2)
@@ -19,7 +25,7 @@ from sklearn.tree import export_graphviz
 
 from sklearn.externals.six import StringIO
 dot_data  = StringIO() # in-memory buffer
-# Creates dot file named tree.dot
+# Creates dot file (named tree.dot, actually I use a in-memory buffer)
 export_graphviz(
             tree,
             out_file =  dot_data, #"myTreeName.dot",

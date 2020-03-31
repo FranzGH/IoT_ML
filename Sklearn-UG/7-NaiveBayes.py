@@ -38,6 +38,7 @@ model.fit(list(features),label)
 predicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild
 print(f"Predicted Value: {predicted}")
 
+
 #######
 # Naive Bayes with Multiple Labels
 #######

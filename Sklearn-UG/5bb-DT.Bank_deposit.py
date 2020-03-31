@@ -60,11 +60,11 @@ plt.show()
 # plt.figure(figsize=(10, 5))
 sns.set(font_scale=1.2)
 
-g1 = sns.catplot(x='education', y='balance', hue='deposit', data=bank_df, kind='boxen')
+g1 = sns.catplot(x='education', y='balance', kind='boxen', hue='deposit', data=bank_df)
 plt.yscale('log')
 plt.xlabel('Education')
 g1.set_xticklabels(rotation=45)
-g2 = sns.catplot(x='marital', hue='deposit', data=bank_df, kind='count')
+g2 = sns.catplot(x='marital', kind='count', hue='deposit', data=bank_df)
 plt.xlabel('Marital')
 g3 = sns.catplot(x='housing', kind='count', hue='deposit', data=bank_df)
 plt.show()
@@ -118,11 +118,11 @@ print ("total number of columns: ", len(bank_df_dummies.columns.tolist()))
 
 ## Turn yes/no in deposit to 1/0 
 
-print (bank_df_dummies['deposit'].value_counts())
+print (bank_df_dummies['deposit'].value_counts()) # How many no, how many yes
 
 bank_df_dummies['deposit'] = bank_df_dummies['deposit'].map({'yes':1, 'no': 0})
 
-labels = bank_df_dummies[['deposit']]
+labels = bank_df_dummies[['deposit']] # as a dataframe, not a series
 print ("check labels: ", labels.head(3))
 
 features = bank_df_dummies.drop(['deposit'], axis=1)
@@ -142,7 +142,7 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.20, stratify=labels)
 
-print ("number of training samples: ", len(X_train))
+print ("number of training samples: ", len(X_train)) # use len to get the nr. of samples 
 print ("number of test samples: ", len(y_test))
 
 from sklearn.tree import DecisionTreeClassifier 
@@ -167,7 +167,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-for cv in tqdm(range(3, 6)):
+for cv in range(3, 6):
     create_grid = GridSearchCV(pipeline, param_grid=check_params, cv=cv)
     create_grid.fit(X_train, y_train)
     print("score for %d fold CV := %3.2f" %(cv, create_grid.score(X_test, y_test)))
@@ -177,7 +177,7 @@ for cv in tqdm(range(3, 6)):
 print ("out o' the loop")
 
 # Visualize the Tree
-
+# Make a picture, with the best classifier
 from sklearn.externals.six import StringIO
 from IPython.display import Image
 from sklearn.tree import export_graphviz
@@ -187,14 +187,10 @@ import pydotplus # pip install pydotplus
 DecsTree = DecisionTreeClassifier(criterion='gini', max_depth=9)
 DecsTree.fit(X_train, y_train)
 
-
 dot_data  = StringIO()
-
 export_graphviz(DecsTree, out_file=dot_data,  
                 filled=True, rounded=True,
                 special_characters=True,feature_names = col_names_list, class_names=['0','1'])
-
-
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 
 graph.write_png('Bank_DecsT.png',)
@@ -202,15 +198,9 @@ graph.write_png('Bank_DecsT.png',)
 # graph.write_png('resized_tree.png')
 Image(graph.create_png())
 
-from sklearn.externals.six import StringIO
-from IPython.display import Image
-from sklearn.tree import export_graphviz
-import pydotplus
-
-
+# Just another tree pic, with reduced depth
 DecsTreeCheck = DecisionTreeClassifier(criterion='gini', max_depth=4)
 DecsTree.fit(X_train, y_train)
-
 
 dot_data  = StringIO()
 
@@ -223,6 +213,8 @@ graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 
 graph.write_png('Bank_DecsT_check.png',)
 Image(graph.create_png())
+
+
 
 ###
 # Drop the Month Column and Try Again (Just for the Sake of the Decision Tree Visualization)
@@ -281,11 +273,12 @@ for cv in tqdm(range(3, 6)):
 
 print ("out o' the loop")
 
+
+# Make a picture, with the best classifier
 from sklearn.externals.six import StringIO
 from IPython.display import Image
 from sklearn.tree import export_graphviz
 import pydotplus
-
 
 DecsTree = DecisionTreeClassifier(criterion='gini', max_depth=6)
 DecsTree.fit(X_train_new, y_train_new)
@@ -305,13 +298,17 @@ graph.write_png('Bank_DecsT_new.png',)
 # graph.write_png('resized_tree.png')
 Image(graph.create_png())
 
+
+
+
 ##########
 # Learn to Plot Feature Importance (Muller's Book)
-# To summarize the workings of a complicated Decision Tree, most commonly we use _featureimportance. It is a number between 0 and 1, where 0 means the feature is not used at all to 1 implying "perfectly predicts the target". We will also check the score on train and test data.
+# To summarize the workings of a complicated Decision Tree, most commonly we use _featureimportance.
+# It is a number between 0 and 1, where 0 means the feature is not used at all to 1 implying "perfectly predicts the target".
+# We will also check the score on train and test data.
 
 DecsTreeModel = DecisionTreeClassifier(criterion='gini', max_depth=6)
 DecsTreeModel.fit(X_train_new, y_train_new)
-
 
 train_score = DecsTreeModel.score(X_train_new, y_train_new)
 print ("score on the training data: ", train_score)

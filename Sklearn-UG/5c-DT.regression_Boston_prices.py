@@ -11,7 +11,7 @@ df.head()
 
 from sklearn.tree import DecisionTreeRegressor    # Import decision tree regression model
 
-X = df[['LSTAT']].values                          # Assign matrix X # X taken as a matrix shape:(506, 1), see commented below to take X as a vector shape:(506,1)
+X = df[['LSTAT']].values                          # Assign matrix X # X taken as a DF, matrix shape:(506, 1), see commented below to take X as a vector shape:(506,1)
 y = df['MEDV'].values                             # Assign vector y
 
 sort_idx = X.flatten().argsort()                  # Sort X and y by ascending values of X. Returns the indices that would sort an array
