@@ -20,33 +20,39 @@ from sklearn.naive_bayes import GaussianNB
 gnb = GaussianNB()
 gnb.fit(df,iris.target)
 
-gnb.score(df,iris.target)
+sco = gnb.score(df,iris.target)
+print(sco)
 
 ##########
-#Multinomial Naive Bayes
+# Multinomial Naive Bayes
 ##########
 review_data = pd.read_csv('Reviews.csv')
 review_data.head()
 review_data = review_data[['Text','Score']]
-review_data = review_data[review_data.Score != 3]
+review_data = review_data[review_data.Score != 3] # Remove value 3, it's an intermediate value, not suited for binariztion
 review_data['Sentiment'] = review_data.Score.map(lambda s:0 if s < 3 else 1)
 review_data.drop('Score',axis=1,inplace=True)
 review_data.head()
 review_data.Sentiment.value_counts()
-review_data = review_data.sample(10000)
+review_data = review_data.sample(100) # Sample 100000 only
+
+##########
+# Sentiment analysis example
+##########
+
 
 # Remove punchuations
 from nltk.tokenize import RegexpTokenizer
 #tokenizer = RegexpTokenizer(r'[A-Za-z]+')
 tokenizer = RegexpTokenizer('[A-Za-z]+')
 review_data['Text'] = review_data.Text.map(lambda x:tokenizer.tokenize(x))
-review_data.Text
+print(review_data.Text)
 
 # Stemming
 from nltk.stem.snowball import SnowballStemmer # pip install snowballstemmer
 stemmer = SnowballStemmer("english")
 review_data['Text'] = review_data.Text.map(lambda l: [stemmer.stem(word) for word in l])
-review_data.Text = review_data.Text.str.join(sep=' ')
+review_data.Text = review_data.Text.str.join(sep=' ') # str accessor only for pd string values. For each line, it merges all its words in a single line
 
 # Preprocessing
 
@@ -54,15 +60,18 @@ review_data.Text = review_data.Text.str.join(sep=' ')
 from sklearn.feature_extraction.text import CountVectorizer
 cv = CountVectorizer(stop_words='english') # Convert a collection of text documents to a matrix of token counts
 review_data_tf = cv.fit_transform(review_data.Text)
+# For each entry, for each word in the vocabulary, the number of times it appears
+# Sparse vectors, because full of 0
 
 # Splitting data into train_test
 from sklearn.model_selection import train_test_split
 trainX,testX,trainY,testY = train_test_split(review_data_tf,review_data.Sentiment)
 
 # Create model
-print(review_data.Sentiment.value_counts())
+print(review_data.Sentiment.value_counts()) # Show what the values are
 from sklearn.naive_bayes import MultinomialNB
 mnb = MultinomialNB(class_prior=[.25,.75])
+# https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html
 mnb.fit(trainX,trainY)
 print(mnb.class_prior)
 y_pred = mnb.predict(testX)
@@ -81,7 +90,7 @@ plt.show()
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB
 from sklearn.model_selection import train_test_split
 trainX,testX,trainY,testY = train_test_split(X,Y)
-bnb = BernoulliNB(binarize=0.0)
+bnb = BernoulliNB(binarize=0.0) # Threshold for binarizing
 mnb = MultinomialNB()
 bnb.fit(trainX, trainY)
 #mnb.fit(trainX, trainY)
@@ -114,6 +123,7 @@ stemmer = SnowballStemmer("english")
 from sklearn.feature_extraction.text import HashingVectorizer
 vectorizer = HashingVectorizer(decode_error='ignore', n_features=2 ** 18,
                                alternate_sign=False)
+# We use this class as the vectorizer for the vocabulary
 
 review_data_chunks = pd.read_csv('Reviews.csv', chunksize=20000)
 '''
@@ -133,7 +143,7 @@ mnb = MultinomialNB(class_prior=[.22,.78])
 for idx,review_data in enumerate(review_data_chunks):
     print ('iter : ',idx)
     review_data = review_data[['Text','Score']]
-    review_data = review_data[review_data.Score != 3] # Remove value 3
+    review_data = review_data[review_data.Score != 3] # Remove value 3, it's an intermediate value, not suited for binariztion
     review_data['Sentiment'] = review_data.Score.map(lambda s:0 if s < 3 else 1)
     review_data.Text = review_data.Text.map(lambda x:tokenizer.tokenize(x))
     review_data.Text = review_data.Text.map(lambda l: [stemmer.stem(word) for word in l])

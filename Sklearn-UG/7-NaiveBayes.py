@@ -55,7 +55,7 @@ print(f"Features: {wine.feature_names}")
 print(f"Labels: {wine.target_names}")
 
 # print data(feature)shape
-wine.data.shape
+print(wine.data.shape)
 # print the wine data features (top 5 records)
 print(wine.data[0:5])
 # print the wine labels (0:Class_0, 1:class_2, 2:class_2)
