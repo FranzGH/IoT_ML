@@ -27,13 +27,13 @@ print(sco)
 # Multinomial Naive Bayes
 ##########
 review_data = pd.read_csv('Reviews.csv')
-review_data.head()
+print(review_data.head())
 review_data = review_data[['Text','Score']]
 review_data = review_data[review_data.Score != 3] # Remove value 3, it's an intermediate value, not suited for binariztion
 review_data['Sentiment'] = review_data.Score.map(lambda s:0 if s < 3 else 1)
 review_data.drop('Score',axis=1,inplace=True)
-review_data.head()
-review_data.Sentiment.value_counts()
+print(review_data.head())
+review_data.Sentiment.value_counts() # histogram
 review_data = review_data.sample(100) # Sample 100000 only
 
 ##########

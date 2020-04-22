@@ -40,6 +40,7 @@ Y = array[:,8]
 
 # First, you will implement a Chi-Squared statistical test
 # for non-negative features to select 4 of the best features from the dataset
+      #####################
 
 # Import the necessary libraries first
 from sklearn.feature_selection import SelectKBest
@@ -111,6 +112,8 @@ def pretty_print_coefs(coefs, names = None, sort = False):
 
 print ("Ridge model:", pretty_print_coefs(ridge.coef_))
 
+
+# Try also lasso regularization (L1), while Ridge is L2
 
 # Why do these traditional feature selection methods still hold?
 # Yes, this question is obvious. Because there are neural net architectures

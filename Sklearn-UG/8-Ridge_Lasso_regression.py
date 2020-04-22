@@ -67,7 +67,7 @@ def linear_regression(data, power, models_to_plot):
     return ret
 
     #Initialize a dataframe to store the results:
-col = ['rss','intercept'] + ['coef_x_%d'%i for i in range(1,16)] # A powerful way of dding columns
+col = ['rss','intercept'] + ['coef_x_%d'%i for i in range(1,16)] # A powerful way for adding columns
 ind = ['model_pow_%d'%i for i in range(1,16)]
 coef_matrix_simple = pd.DataFrame(index=ind, columns=col)
 
