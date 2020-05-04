@@ -24,7 +24,7 @@ movies_df.plot(kind='scatter', x='rating', y='revenue_millions', title='Revenue 
 plt.show()
 
 movies_df['rating'].plot(kind='hist', title='Rating')
-plt.show()
+plt.show() # Floor int values (see below for the bar chart)
 
 print(movies_df['rating'].describe())
 #Using a Boxplot we can visualize this data:
@@ -40,6 +40,12 @@ plt.show()
 
 # Plot a categorical variable
 #movies_df['rating'].plot(kind='chart', title='Rating') # ValueError: chart is not a valid plot kind
+# movies_df['rating'].plot(kind='chart', title='Rating') # ValueErrorchart is not a valid plot kind
+movies_df['rating'][:12].plot(kind='bar', title='Rating') # This is a bar, not histogram!
+plt.show()
+# hist (above) is ok.
+
+# Categorical histogram
 #movies_df['rating_category'].plot(kind='hist', title='Rating category') # TypeError: no numeric data to plot
 movies_df['rating_category'].value_counts().plot(kind='bar', title='Rating category')
 plt.show()

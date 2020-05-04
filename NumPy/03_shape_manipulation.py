@@ -16,7 +16,7 @@ b = a.ravel()  # returns the array, flattened
 print(b)
 b = a.reshape(6,2)
 print(b)
-b = a.T
+b = a.T # T is the transpose
 print(b)
 print(a.T.shape)
 

@@ -146,8 +146,10 @@ df = df.fillna(method='ffill')
 # Rolling mean
 plt.figure(figsize=(12,8))
 plt.plot(df.loc['2017-11':'2017-12']['Consumption'].rolling('7D').mean())
-plt.axvline('2017-11-09', color = 'red')
-plt.axvline('2017-11-16', color = 'red')
+#plt.axvline('2017-11-09', color = 'red')
+#plt.axvline('2017-11-16', color = 'red')
+from datetime import datetime
+plt.axvline(datetime.strptime('2017-11-16', '%Y-%m-%d'), color = 'red')
 plt.show()
 
 plt.figure(figsize=(12,8))

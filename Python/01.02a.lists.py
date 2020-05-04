@@ -42,3 +42,14 @@ print(squares)   # Prints [0, 1, 4, 9, 16]
 nums = [0, 1, 2, 3, 4]
 even_squares = [x ** 2 for x in nums if x % 2 == 0]
 print(even_squares)  # Prints "[0, 4, 16]"
+
+for i in range(5):
+     print(i)
+
+idxes = range(8)
+for i in idxes:
+    print(i)
+
+idxes = range(3, 8)
+for i in idxes:
+    print(i)

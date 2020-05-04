@@ -7,7 +7,7 @@ print(movies_df.head()) #5 rows by default
 #print(movies_df.head(10))
 #print(movies_df.tail(2))
 
-print(movies_df.info())
+print(movies_df.info()) # How amny entries per column, incl. index
 print(movies_df.shape)
 
 temp_df = movies_df.append(movies_df)
@@ -30,18 +30,19 @@ movies_df.rename(columns={
 print(movies_df.columns)
 
 movies_df.columns = [col.lower() for col in movies_df]
+# movies_df.columns = [col.lower() for col in movies_df.columns] # It's the same
 print(movies_df.columns)
 
 
 # Most commonly you'll see Python's None or NumPy's np.nan, each of which are handled differently in some situations.
-print(movies_df.isnull())
+print(movies_df.isnull()) # Prints the map of null values
 
-print(movies_df.isnull().sum())
+print(movies_df.isnull().sum()) # For each column, collapses the rows
 
 #movies_df.dropna(inplace=True)
 #print(movies_df.dropna(axis=1)) #Removes the columns
 
-# Imputation
+# Imputation, i.e., replacing null values
 revenue = movies_df['revenue_millions']
 print(revenue.head()) # N.B., the index column is always present
 revenue_mean = revenue.mean()
@@ -51,7 +52,7 @@ print(movies_df.isnull().sum())
 
 print(movies_df.describe())
 print(movies_df['genre'].describe())
-print(movies_df['genre'].value_counts().head(10))
+print(movies_df['genre'].value_counts().head(10)) # The ten most common values
 
 # Relationships between continuous variables
 print(movies_df.corr())
@@ -69,7 +70,7 @@ prom = movies_df.loc["Prometheus"] #index column
 print(prom)
 
 prom = movies_df.iloc[1] #numerical index
-print(prom)
+print(prom) # Prints the same row as above
 
 movie_subset = movies_df.loc['Prometheus':'Sing'] # Sing included
 print(movie_subset)
@@ -83,7 +84,7 @@ print(condition.head()) # False, True, False, etc.
 print(movies_df[movies_df['director'] == "Ridley Scott"])
 print(movies_df[movies_df['rating'] >= 8.6].head(3))
 print(movies_df[(movies_df['director'] == 'Christopher Nolan') | (movies_df['director'] == 'Ridley Scott')].head())
-# More coincise with isin()
+# More coincise with isin() method of a DataFrame or of a Series
 print(movies_df[movies_df['director'].isin(['Christopher Nolan', 'Ridley Scott'])].head())
 #quantiles
 print(movies_df[

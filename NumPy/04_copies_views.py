@@ -19,9 +19,9 @@ print(f(a)) # same value, because the object is the same (copied reference, not 
 #Different array objects can share the same data.
 # The view method creates a new array object that looks at the same data.
 c = a.view()
-print(c is a)
+print(c is a) # False
 print(c.base is a) # c is a view of the data owned by a
-print(c.flags.owndata)
+print(c.flags.owndata) # False
 c = c.reshape((2, 6)) # a's shape doesn't change
 print(a.shape) 
 c[0, 4] = 1234 # a's data changes
@@ -34,11 +34,12 @@ print(a)
 
 #deep copy
 d = a.copy() 
-print(d is a)
-print(d.base is a)
+print(d is a) # False
+print(d.base is a) # False
 d[0,0] = 9999
 print(a)
 
+# N.B.
 # Sometimes copy should be called after slicing if the original array is not required anymore. For example, suppose a is a huge intermediate result and the final result b only contains a small fraction of a, a deep copy should be made when constructing b with slicing:
 a = np.arange(int(1e8))
 b = a[:100].copy()
