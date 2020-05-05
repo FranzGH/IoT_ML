@@ -7,4 +7,5 @@ print("2- q1 {:.2f}".format(q1)) #string format
 print("3- q2 {:6d}".format(q2))  #padding
 print("4- q2 {:10d}".format(q2))  #padding
 print("5- q1 {:7.2f}".format(q1)) #
+print("6- q1 {:7.2f}, q2 {:7d}".format(q1, q2))
 

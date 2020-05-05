@@ -5,6 +5,9 @@ import numpy as np
 np_array_2d = np.arange(0, 6).reshape([2,3])
 print(np_array_2d)
 
+a = np.sum(np_array_2d) #Collapse 0-axis
+print(a)
+
 a = np.sum(np_array_2d, axis = 0) #Collapse 0-axis
 print(a)
 
