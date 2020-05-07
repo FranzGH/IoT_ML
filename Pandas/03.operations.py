@@ -7,7 +7,7 @@ print(movies_df.head()) #5 rows by default
 #print(movies_df.head(10))
 #print(movies_df.tail(2))
 
-print(movies_df.info()) # How amny entries per column, incl. index
+print(movies_df.info()) # How many non null entries per column, incl. index. Column type
 print(movies_df.shape)
 
 temp_df = movies_df.append(movies_df)
@@ -50,8 +50,8 @@ print(revenue_mean)
 revenue.fillna(revenue_mean, inplace=True)
 print(movies_df.isnull().sum())
 
-print(movies_df.describe())
-print(movies_df['genre'].describe())
+print(movies_df.describe()) # Numeric only
+print(movies_df['genre'].describe()) # Categoric
 print(movies_df['genre'].value_counts().head(10)) # The ten most common values
 
 # Relationships between continuous variables
@@ -78,7 +78,7 @@ movie_subset = movies_df.iloc[1:4] # 4 not included
 print(movie_subset)
 
 #Queries
-condition = (movies_df['director'] == "Ridley Scott")
+condition = (movies_df['director'] == "Ridley Scott") # Important for vectorization
 print(condition.head()) # False, True, False, etc.
 
 print(movies_df[movies_df['director'] == "Ridley Scott"])

@@ -17,7 +17,7 @@ pd.options.display.max_columns = df.shape[1] #to show all columns
 print(df.describe(include='all')) #to show numerical and categorical properties
 
 # measurements = outcomes or indicators
-# reduced_lunch is % of students on reduced lunch. It is an indicator
+# reduced_lunch is % of students on reduced lunch. It may indicate poverty. It is an indicator.
 print(df[['reduced_lunch', 'school_rating']].groupby(['school_rating']).describe())
 
 # The descriptive statistics consistently reveal that schools with more students on reduced lunch under-perform when compared to their peers. 
