@@ -20,7 +20,7 @@ features = ['sepal length', 'sepal width', 'petal length', 'petal width']
 # Separating out the features
 x = df.loc[:, features].values
 # Separating out the target
-y = df.loc[:,['target']].values
+y = df.loc[:,['target']].values # Access column by name
 # Standardizing the features
 x = StandardScaler().fit_transform(x)
 
@@ -41,7 +41,7 @@ principalDf = pd.DataFrame(data = principalComponents
 finalDf = pd.concat([principalDf, df[['target']]], axis = 1)
 print(finalDf.head())
 
-'''
+
 fig = plt.figure(figsize = (8,8))
 ax = fig.add_subplot(1,1,1) 
 ax.set_xlabel('Principal Component 1', fontsize = 15)
@@ -49,7 +49,7 @@ ax.set_ylabel('Principal Component 2', fontsize = 15)
 ax.set_title('2 component PCA', fontsize = 20)
 targets = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
 colors = ['r', 'g', 'b']
-for target, color in zip(targets,colors):
+for target, color in zip(targets,colors):  # a zip object, which is an iterator of tuples
     idx = finalDf['target'] == target
     ax.scatter(finalDf.loc[idx, 'principal component 1']
                , finalDf.loc[idx, 'principal component 2']
@@ -59,7 +59,7 @@ ax.legend(targets)
 ax.grid()
 
 plt.show()
-'''
+
 
 # Let's compare
 fig, (ax0, ax1) = plt.subplots(ncols=2, figsize=(16, 8))
@@ -95,12 +95,14 @@ plt.show()
 
 # Explained Variance
 print(pca.explained_variance_ratio_)
+# Explained variance (also called explained variation) is used to measure the discrepancy between a model and actual data. 
+# For each component, how much of the target variance is explained by the component's variance
 
 #####
 # PCA to Speed-up Machine Learning Algorithms
 #####
 
-# Download and Load the Data
+# Download and Load the Data (digits dataset)
 from sklearn.datasets import fetch_openml
 # mnist = fetch_openml('MNIST original')
 # https://www.kaggle.com/avnishnish/mnist-original
@@ -112,8 +114,8 @@ mnist = scipy.io.loadmat('datasets/MNIST-original.mat')
 from sklearn.model_selection import train_test_split
 # test_size: what proportion of original data is used for test set
 # train_img, test_img, train_lbl, test_lbl = train_test_split( mnist.data, mnist.target, test_size=1/7.0, random_state=0)
-mnist_data = mnist["data"].T
-mnist_label = mnist["label"][0]
+mnist_data = mnist["data"].T # data contains 784 rows (the pixels), 7000 columns (the images)
+mnist_label = mnist["label"][0] # 7,000 labels
 train_img, test_img, train_lbl, test_lbl = train_test_split( mnist_data, mnist_label, test_size=1/7.0, random_state=0)
 
 from sklearn.preprocessing import StandardScaler
@@ -126,13 +128,13 @@ test_img = scaler.transform(test_img)
 
 from sklearn.decomposition import PCA
 # Make an instance of the Model
-pca = PCA(.9999) # choose the minimum number of principal components such that 95% of the variance is retained.
+pca = PCA(.95) # choose the minimum number of principal components such that 95% of the variance is retained.
 
 pca.fit(train_img)
-print(pca.n_components_)
+print(pca.n_components_) # 330 out of 784
 
-train_img = pca.transform(train_img)
-test_img = pca.transform(test_img)
+train_img = pca.transform(train_img) # 60,000 * 330
+test_img = pca.transform(test_img) # 10,000 * 330
 
 from sklearn.linear_model import LogisticRegression
 # all parameters not specified are set to their defaults
@@ -142,9 +144,9 @@ logisticRegr.fit(train_img, train_lbl)
 
 # Predict for One Observation (image)
 res = logisticRegr.predict(test_img[0].reshape(1,-1))
-print(res)
-# Predict for One Observation (image)
+print(res) # 1 digit predicted
+# Predict for several Observations (image)
 res = logisticRegr.predict(test_img[0:10])
-print(res)
+print(res) # 10 digits predicted
 
-print(logisticRegr.score(test_img, test_lbl))
+print(logisticRegr.score(test_img, test_lbl)) #92%

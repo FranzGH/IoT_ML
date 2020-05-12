@@ -55,19 +55,20 @@ print(breast_dataset.tail())
 
 from keras.datasets import cifar10
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-print('Traning data shape:', x_train.shape)
+print('Traning data shape:', x_train.shape) # 5,000 images, 32*32 pixles, 3 colors per pixel
 print('Testing data shape:', x_test.shape)
-print(y_train.shape,y_test.shape)
+print(y_train.shape,y_test.shape) # The labels
 
 # Find the unique numbers from the train labels
 classes = np.unique(y_train)
 nClasses = len(classes)
-print('Total number of outputs : ', nClasses)
-print('Output classes : ', classes)
+print('Total number of outputs : ', nClasses) # 2
+print('Output classes : ', classes) # [0, ..., 9]
 
 import matplotlib.pyplot as plt
 # %matplotlib inline
 
+# The dictionary of our targets
 label_dict = {
  0: 'airplane',
  1: 'automobile',
@@ -87,12 +88,13 @@ plt.figure(figsize=[5,5])
 plt.subplot(121)
 curr_img = np.reshape(x_train[0], (32,32,3)) #RGB
 plt.imshow(curr_img)
-print(plt.title("(Label: " + str(label_dict[y_train[0][0]]) + ")"))
+print(plt.title("(Label: " + str(label_dict[y_train[0][0]]) + ")")) # y_train[0] is a 1-element vector
 
 # Display the first image in testing data
 plt.subplot(122)
-curr_img = np.reshape(x_test[0],(32,32,3))
-plt.imshow(curr_img)
+#curr_img = np.reshape(x_test[0],(32,32,3))
+#plt.imshow(curr_img)
+plt.imshow(x_test[0]) # works as above
 print(plt.title("(Label: " + str(label_dict[y_test[0][0]]) + ")"))
 plt.show()
 
@@ -108,7 +110,8 @@ x = breast_dataset.loc[:, features].values
 x = StandardScaler().fit_transform(x) # normalizing the features
 print(x.shape)
 
-print(f'{np.mean(x)}, {np.std(x)}')
+print(f'{np.mean(x)}, {np.std(x)}') # all elements
+print(f'{np.mean(x, axis = 0)[:10]}, {np.std(x, axis = 0)[:10]}') # per columns
 feat_cols = ['feature'+str(i) for i in range(x.shape[1])]
 normalised_breast = pd.DataFrame(x,columns=feat_cols)
 print(normalised_breast.tail())

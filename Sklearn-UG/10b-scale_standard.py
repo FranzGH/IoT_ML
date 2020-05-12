@@ -19,14 +19,14 @@ warnings.filterwarnings('ignore')
 # %matplotlib inline
 matplotlib.style.use('ggplot')
 
-np.random.seed(34)
+np.random.seed(7)
 
 #create columns of various distributions
 df = pd.DataFrame({ # Dataframe from a dictionary
     'beta': np.random.beta(5, 1, 1000) * 60,        # beta
     'exponential': np.random.exponential(10, 1000), # exponential
-    'normal_p': np.random.normal(10, 2, 1000),      # normal platykurtic
-    'normal_l': np.random.normal(10, 10, 1000),     # normal leptokurtic
+    'normal_l': np.random.normal(10, 2, 1000),      # normal leptokurtic 
+    'normal_p': np.random.normal(10, 10, 1000),     # normal platykurtic
 })
 # Create 1000 samples with these distributions
 
@@ -34,6 +34,7 @@ df = pd.DataFrame({ # Dataframe from a dictionary
 first_half = np.random.normal(20, 3, 500) 
 second_half = np.random.normal(-20, 3, 500) 
 bimodal = np.concatenate([first_half, second_half])
+# bimodal = np.concatenate([second_half, first_half]) # This is of course the same
 
 df['bimodal'] = bimodal
 
@@ -43,24 +44,36 @@ print(col_names)
 
 # plot original distribution plot
 fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 8))
-ax1.set_title('Original Distributions')
+ax1.set_title('Original Density estimation plots')
 
 sns.kdeplot(df['beta'], ax=ax1)
 sns.kdeplot(df['exponential'], ax=ax1)
-sns.kdeplot(df['normal_p'], ax=ax1)
 sns.kdeplot(df['normal_l'], ax=ax1)
+sns.kdeplot(df['normal_p'], ax=ax1)
 sns.kdeplot(df['bimodal'], ax=ax1)
-
+# Fit and plot a univariate or bivariate kernel density estimate.
 plt.show()
 
+# It's different from the actual distribution, whose histograms are plotted here:
+fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 8))
+ax1.set_title('Distribution and denisty estimate')
+sns.distplot(df['beta'], ax=ax1)
+sns.distplot(df['exponential'], ax=ax1)
+sns.distplot(df['normal_l'], ax=ax1)
+sns.distplot(df['normal_p'], ax=ax1)
+sns.distplot(df['bimodal'], ax=ax1)
+plt.show()
+
+
 print(df.head())
-print(df)
-print(df.mean())
-print(df.describe())
+print(df) # Print the "whole" DF
+print(df.mean()) # Columns
+print(df.describe()) # Count, mean, std, quant
 
-df.plot()
+df.plot() # Plot all the DF values
+plt.show()
 
-normal_big = np.random.normal(1000000, 10000, (1000,1))  # normal distribution of large values
+normal_big = np.random.normal(1000000, 10000, (1000,1))  # normal distribution of large values (one million)
 df['normal_big'] = normal_big
 print(df.normal_big.mean())
 
@@ -70,13 +83,13 @@ ax1.set_title('Original Distributions')
 
 sns.kdeplot(df['beta'], ax=ax1)
 sns.kdeplot(df['exponential'], ax=ax1)
-sns.kdeplot(df['normal_p'], ax=ax1)
 sns.kdeplot(df['normal_l'], ax=ax1)
+sns.kdeplot(df['normal_p'], ax=ax1)
 sns.kdeplot(df['bimodal'], ax=ax1)
 sns.kdeplot(df['normal_big'], ax=ax1)
-plt.show()
+plt.show() # A flat island around the value 1,000,000
 
-df.plot()
+df.plot() # Only values around one million
 plt.show()
 print(df.describe())
 
@@ -90,23 +103,23 @@ ax1.set_title('After MinMaxScaler')
 
 sns.kdeplot(df_mm['beta'], ax=ax1)
 sns.kdeplot(df_mm['exponential'], ax=ax1)
-sns.kdeplot(df_mm['normal_p'], ax=ax1)
 sns.kdeplot(df_mm['normal_l'], ax=ax1)
+sns.kdeplot(df_mm['normal_p'], ax=ax1)
 sns.kdeplot(df_mm['bimodal'], ax=ax1)
 sns.kdeplot(df_mm['normal_big'], ax=ax1)
 plt.show()
 # Fit and plot a univariate or bivariate kernel density estimate.
 
+# Here are the actual histograms
 fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 8))
 ax1.set_title('After MinMaxScaler')
 sns.distplot(df_mm['beta'], ax=ax1)
 sns.distplot(df_mm['exponential'], ax=ax1)
-sns.distplot(df_mm['normal_p'], ax=ax1)
 sns.distplot(df_mm['normal_l'], ax=ax1)
+sns.distplot(df_mm['normal_p'], ax=ax1)
 sns.distplot(df_mm['bimodal'], ax=ax1)
 sns.distplot(df_mm['normal_big'], ax=ax1)
 plt.show()
-
 
 mins = [df[col].min() for col in df.columns]
 print(mins)
@@ -132,8 +145,8 @@ ax1.set_title('After RobustScaler')
 
 sns.kdeplot(df_r['beta'], ax=ax1)
 sns.kdeplot(df_r['exponential'], ax=ax1)
-sns.kdeplot(df_r['normal_p'], ax=ax1)
 sns.kdeplot(df_r['normal_l'], ax=ax1)
+sns.kdeplot(df_r['normal_p'], ax=ax1)
 sns.kdeplot(df_r['bimodal'], ax=ax1)
 sns.kdeplot(df_r['normal_big'], ax=ax1)
 
@@ -165,8 +178,8 @@ ax1.set_title('After StandardScaler')
 
 sns.kdeplot(df_s['beta'], ax=ax1)
 sns.kdeplot(df_s['exponential'], ax=ax1)
-sns.kdeplot(df_s['normal_p'], ax=ax1)
 sns.kdeplot(df_s['normal_l'], ax=ax1)
+sns.kdeplot(df_s['normal_p'], ax=ax1)
 sns.kdeplot(df_s['bimodal'], ax=ax1)
 sns.kdeplot(df_s['normal_big'], ax=ax1)
 plt.show()
@@ -190,8 +203,8 @@ ax1.set_title('After Normalizer')
 
 sns.kdeplot(df_n['beta'], ax=ax1)
 sns.kdeplot(df_n['exponential'], ax=ax1)
-sns.kdeplot(df_n['normal_p'], ax=ax1)
 sns.kdeplot(df_n['normal_l'], ax=ax1)
+sns.kdeplot(df_n['normal_p'], ax=ax1)
 sns.kdeplot(df_n['bimodal'], ax=ax1)
 sns.kdeplot(df_n['normal_big'], ax=ax1)
 
@@ -203,10 +216,12 @@ print(mins)
 maxs = [df_n[col].max() for col in df_s.columns]
 print(maxs)
 
+# Transformation brought sample norm equal to 1
+# But you usually want to transform the features (columns), not the samples (rows)
+
 # Normalizer also moved the features to similar scales.
 # Notice that the range for our much larger feature's values
 # is now extremely small and clustered around .9999999999.
-
 
 #####
 # Combined Plot
@@ -224,38 +239,38 @@ ax0.set_title('Original Distributions')
 
 sns.kdeplot(df['beta'], ax=ax0)
 sns.kdeplot(df['exponential'], ax=ax0)
-sns.kdeplot(df['normal_p'], ax=ax0)
 sns.kdeplot(df['normal_l'], ax=ax0)
+sns.kdeplot(df['normal_p'], ax=ax0)
 sns.kdeplot(df['bimodal'], ax=ax0)
-sns.kdeplot(df['normal_big'], ax=ax0);
+sns.kdeplot(df['normal_big'], ax=ax0)
 
 
 ax1.set_title('After MinMaxScaler')
 
 sns.kdeplot(df_mm['beta'], ax=ax1)
 sns.kdeplot(df_mm['exponential'], ax=ax1)
-sns.kdeplot(df_mm['normal_p'], ax=ax1)
 sns.kdeplot(df_mm['normal_l'], ax=ax1)
+sns.kdeplot(df_mm['normal_p'], ax=ax1)
 sns.kdeplot(df_mm['bimodal'], ax=ax1)
-sns.kdeplot(df_mm['normal_big'], ax=ax1);
+sns.kdeplot(df_mm['normal_big'], ax=ax1)
 
 
 ax2.set_title('After RobustScaler')
 
 sns.kdeplot(df_r['beta'], ax=ax2)
 sns.kdeplot(df_r['exponential'], ax=ax2)
-sns.kdeplot(df_r['normal_p'], ax=ax2)
 sns.kdeplot(df_r['normal_l'], ax=ax2)
+sns.kdeplot(df_r['normal_p'], ax=ax2)
 sns.kdeplot(df_r['bimodal'], ax=ax2)
-sns.kdeplot(df_r['normal_big'], ax=ax2);
+sns.kdeplot(df_r['normal_big'], ax=ax2)
 
 
 ax3.set_title('After StandardScaler')
 
 sns.kdeplot(df_s['beta'], ax=ax3)
 sns.kdeplot(df_s['exponential'], ax=ax3)
-sns.kdeplot(df_s['normal_p'], ax=ax3)
 sns.kdeplot(df_s['normal_l'], ax=ax3)
+sns.kdeplot(df_s['normal_p'], ax=ax3)
 sns.kdeplot(df_s['bimodal'], ax=ax3)
 sns.kdeplot(df_s['normal_big'], ax=ax3)
 
