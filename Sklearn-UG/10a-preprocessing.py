@@ -30,6 +30,7 @@ X.drop(['index'], axis=1, inplace=True) # To drop the old index
 
 print(X.head())
 
+# Map of missing values
 # MissingIndicator - Indicator of missing values, per column
 from sklearn.impute import MissingIndicator
 X.replace({999.0 : np.NaN}, inplace=True) # 999 => NaN, as multimple type of missing values are not supported
@@ -128,7 +129,7 @@ cat = cat.fillna('missing') # Missing values automatically addressed
 labels, unique = pd.factorize(cat, sort=True) # factorize(), see below
 # Encode the object as an enumerated type or categorical variable.
 # This method is useful for obtaining a numeric representation of an array when all that matters is identifying distinct values.
-X.edu_level = labels   
+X.edu_level = labels   # numeric array (int64)
 
 # Nominal features
 # The most popular way to encode nominal features is one-hot-encoding.

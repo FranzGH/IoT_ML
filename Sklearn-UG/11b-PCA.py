@@ -5,7 +5,7 @@
 # In a layman term, when the data is projected into a lower dimension (assume three dimensions) from a higher space,
 # the three dimensions are nothing but the three Principal Components that captures (or holds) most of the variance (information) of your data.
 
-#Principal components have both direction and magnitude.
+# Principal components have both direction and magnitude.
 # The direction represents across which principal axes the data is mostly spread out or has most variance and
 # the magnitude signifies the amount of variance that Principal Component captures of the data when projected onto that axis.
 # The principal components are a straight line, and the first principal component holds the most variance in the data.
@@ -62,7 +62,7 @@ print(y_train.shape,y_test.shape) # The labels
 # Find the unique numbers from the train labels
 classes = np.unique(y_train)
 nClasses = len(classes)
-print('Total number of outputs : ', nClasses) # 2
+print('Total number of outputs : ', nClasses) # 10
 print('Output classes : ', classes) # [0, ..., 9]
 
 import matplotlib.pyplot as plt
@@ -202,7 +202,7 @@ y_test = np_utils.to_categorical(y_test)
 
 batch_size = 128
 num_classes = 10
-epochs = 20
+epochs = 10 #20
 
 model = Sequential()
 model.add(Dense(1024, activation='relu', input_shape=(99,)))
@@ -216,8 +216,9 @@ model.compile(loss='categorical_crossentropy', # Loss function to be minimized
               optimizer=RMSprop(),
               metrics=['accuracy']) # Performance metrics for an end user
 
-history = model.fit(train_img_pca, y_train,batch_size=batch_size,epochs=epochs,verbose=1,
-                    validation_data=(test_img_pca, y_test))
+history = model.fit(train_img_pca, y_train,batch_size=batch_size,epochs=epochs,verbose=1)#, # You'll make an evaluate() later
+                    #validation_data=(test_img_pca, y_test)) # You evaluate on the fly
+                    #validation_split=0.3) # You evaluate on the fly
 
 ## Original dataset
 model = Sequential()
@@ -231,5 +232,6 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 history = model.fit(x_train_flat, y_train,batch_size=batch_size,epochs=epochs,verbose=1,
-                    validation_data=(x_test_flat, y_test))
+                    validation_split=0.3)
+                    #validation_data=(x_test_flat, y_test))
 
