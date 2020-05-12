@@ -98,7 +98,7 @@ plt.imshow(x_test[0]) # works as above
 print(plt.title("(Label: " + str(label_dict[y_test[0][0]]) + ")"))
 plt.show()
 
-# Text(0.5, 1.0, '(Label: frog)')
+# Text(0.5, 1.0, '(Label: frog)')  is the text of the print('Title')
 # Text(0.5, 1.0, '(Label: cat)')
 
 ########
@@ -144,19 +144,19 @@ plt.legend(targets,prop={'size': 15})
 plt.show()
 
 ######
-# Visualizing the CIFAR - 10 data
+# Visualizing the CIFAR - 10 data (the ten animals)
 ######
 
 print(np.min(x_train),np.max(x_train))
 x_train = x_train/255.0
 print(np.min(x_train),np.max(x_train))
 print(x_train.shape)
-x_train_flat = x_train.reshape(-1,3072) # 32*32*3
-feat_cols = ['pixel'+str(i) for i in range(x_train_flat.shape[1])]
+x_train_flat = x_train.reshape(-1,3072) # 32*32*3 columns  (50,000 rows)
+feat_cols = ['pixel'+str(i) for i in range(x_train_flat.shape[1])] # 3,072 features
 df_cifar = pd.DataFrame(x_train_flat,columns=feat_cols)
 df_cifar['label'] = y_train
-print('Size of the dataframe: {}'.format(df_cifar.shape))
-df_cifar.head()
+print('Size of the dataframe: {}'.format(df_cifar.shape)) # 50,000 * 3,073
+print(df_cifar.head())
 pca_cifar = PCA(n_components=2)
 principalComponents_cifar = pca_cifar.fit_transform(df_cifar.iloc[:,:-1]) # Avoid last column, which is the labels
 
@@ -179,7 +179,7 @@ sns.scatterplot(
 plt.show()
 
 ######
-# Speed Up Deep Learning Training using PCA with CIFAR - 10 Dataset
+# Speed Up Deep Learning Training using PCA with CIFAR - 10 Dataset (10 animals)
 #######
 
 x_test = x_test/255.0
@@ -197,7 +197,7 @@ from keras.layers import Dense
 from keras.utils import np_utils
 from keras.optimizers import RMSprop
 # Now, you will convert your training and testing labels to one-hot encoding vector.
-y_train = np_utils.to_categorical(y_train)
+y_train = np_utils.to_categorical(y_train) # 1 column, multiclass -> multiple (binary) columns
 y_test = np_utils.to_categorical(y_test)
 
 batch_size = 128
@@ -209,12 +209,12 @@ model.add(Dense(1024, activation='relu', input_shape=(99,)))
 model.add(Dense(1024, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(256, activation='relu'))
-model.add(Dense(num_classes, activation='softmax'))
+model.add(Dense(num_classes, activation='softmax')) # num_classes outputs
 
 print(model.summary())
-model.compile(loss='categorical_crossentropy',
+model.compile(loss='categorical_crossentropy', # Loss function to be minimized
               optimizer=RMSprop(),
-              metrics=['accuracy'])
+              metrics=['accuracy']) # Performance metrics for an end user
 
 history = model.fit(train_img_pca, y_train,batch_size=batch_size,epochs=epochs,verbose=1,
                     validation_data=(test_img_pca, y_test))

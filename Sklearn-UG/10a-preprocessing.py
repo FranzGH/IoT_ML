@@ -143,6 +143,10 @@ nominals['edu_level'] = X.edu_level
 print(nominals) # The final result
 
 
+####
+# See also target encoding example
+
+
 ###########
 ###########
 # Numerical features
@@ -187,7 +191,85 @@ print(Z)
 #######
 #######
 
-# Before applying any scaling transformations it is very important to split your data into a train set and a test set.
+# Standardization of a dataset is a common requirement for many machine learning estimators.
+# Typically this is done by removing the mean and scaling to unit variance. 
+X = pd.DataFrame(
+    np.array([8, 25, -1, 10.637])\
+              .reshape((-1,1)))
+from sklearn.preprocessing import StandardScaler
+# https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+scaler = StandardScaler()
+print('StandardScaler')
+ss = scaler.fit_transform(X.values.reshape(-1, 1))
+print(ss)
+
+# MinMax Scaler
+# sensitive to outliers
+from sklearn.preprocessing import MinMaxScaler
+# https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html
+scaler = MinMaxScaler(feature_range=(-3,3)) # of the target feature (default is obviously 0-1)
+print('MinMaxScaler')
+ss =scaler.fit_transform(X.values.reshape(-1, 1))
+print(ss)
+ 
+from sklearn.preprocessing import MaxAbsScaler
+# https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MaxAbsScaler.html
+# Scale each feature by its maximum absolute value.
+# This scaler is meant for data that is already centered at zero or sparse data.
+scaler = MaxAbsScaler()
+print('MaxAbsScaler')
+ss = scaler.fit_transform(X.values.reshape(-1, 1))
+print(ss)
+
+from sklearn.preprocessing import RobustScaler
+# It removes the median and scales the data according to the quantile range
+# Robust vs outlier
+robust = RobustScaler(quantile_range = (0.1,0.9))
+print('RobustScaler')
+ss = robust.fit_transform(X.values.reshape(-1, 1))
+print(ss)
+
+# Compare RS
+orig = np.array([-450, -85, -1, 0, 0, 1, 1, 1, 2, 3, 4, 4, 6, 30, 70]).reshape(-1,1)
+robust = RobustScaler(quantile_range = (0.25,0.75)) # default values
+rs = robust.fit_transform(orig)
+print(rs)
+# Compare with below:
+# 1) the central value is not influenced by outliers (differently from standardizer and minMax)
+# 2) the range is well distributed (differently from min-max and standardizer)
+
+
+scaler = StandardScaler() # Removes mean, not median
+print('StandardScaler')
+ss = scaler.fit_transform(orig)
+print(ss)
+print(f'mean: {ss.mean()} stdev: {ss.std()}')
+
+scaler = MinMaxScaler()
+print('MinMaxScaler')
+ms =scaler.fit_transform(orig)
+print(ms)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+fig, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8)) = plt.subplots(nrows=4, ncols=2, figsize=(20, 16))
+ax1.set_title('Original')
+sns.distplot(orig, kde=False, ax=ax1) # No distribution estimation
+ax3.set_title('Standardized')
+sns.distplot(ss, kde=False, ax=ax3)
+ax4.set_title('Standardized focus')
+sns.distplot(ss[2:-2], kde=False, ax=ax4)
+ax5.set_title('MinMax')
+sns.distplot(ms, kde=False, ax=ax5)
+ax6.set_title('MinMax focus')
+sns.distplot(ms[2:-2], kde=False, ax=ax6)
+ax7.set_title('Robust')
+sns.distplot(rs, kde=False, ax=ax7)
+ax8.set_title('Robust focus')
+sns.distplot(rs[2:-2], kde=False, ax=ax8)
+plt.show()
+
+
 
 # Standardization can drastically improve the performance of models.
 # Standardization is a transformation that centers the data by removing the mean value of each feature
@@ -200,37 +282,11 @@ print(Z)
 # If a feature has a variance that is orders of magnitude larger than others,
 # it might dominate the objective function and make the estimator unable to learn from other features correctly as expected.
 
-X = pd.DataFrame(
-    np.array([8, 25, -1, 10.637])\
-              .reshape((-1,1)))
-from sklearn.preprocessing import StandardScaler
-scaler = StandardScaler()
-print('StandardScaler')
-ss = scaler.fit_transform(X.values.reshape(-1, 1))
-print(ss)
 
-# MinMax Scaler
-# sensitive to outliers
-from sklearn.preprocessing import MinMaxScaler
-scaler = MinMaxScaler(feature_range=(-3,3)) # of the target feature (default is obviously 0-1)
-print('MinMaxScaler')
-ss =scaler.fit_transform(X.values.reshape(-1, 1))
-print(ss)
- 
-# This scaler is meant for data that is already centered at zero or sparse data.
-from sklearn.preprocessing import MaxAbsScaler
-scaler = MaxAbsScaler()
-print('MaxAbsScaler')
-ss = scaler.fit_transform(X.values.reshape(-1, 1))
-print(ss)
+# Before applying any scaling transformations it is very important to split your data into a train set and a test set.
 
-# It removes the median and scales the data according to the quantile range
-# Robust vs outlier
-from sklearn.preprocessing import RobustScaler
-robust = RobustScaler(quantile_range = (0.1,0.9))
-print('RobustScaler')
-robust.fit_transform(X.values.reshape(-1, 1))
-print(ss)
+
+#### Next lecture
 
 # Normalization is the process of scaling individual samples to have unit norm.
 # In basic terms you need to normalize data when the algorithm predicts based on the weighted relationships formed between data points.
