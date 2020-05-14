@@ -193,6 +193,34 @@ print(maxs)
 # Normalizer
 ######
 
+# https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html
+# Divide each component of a vector by its norm (function used to measure the size of a vector)
+# l1, norm is Manhattan distance
+# l2, norm Euclidean distance
+# max, norm is max component
+
+X = [[4, 1, -2, 2],
+     [1, -3, 9, 3],
+     [5, 7, 5, -1]]
+transformer = preprocessing.Normalizer().fit(X)  # fit does nothing.
+print('l2 norm')
+print(transformer.transform(X))
+
+X = [[4, 1, -2, 2],
+     [1, -3, 9, 3],
+     [5, 7, 5, -1]]
+transformer = preprocessing.Normalizer(norm='l1').fit(X)  # fit does nothing.
+print('l1 norm')
+print(transformer.transform(X))
+
+X = [[4, 1, -2, 2],
+     [1, -3, 9, 3],
+     [5, 7, 5, -1]]
+transformer = preprocessing.Normalizer(norm='max').fit(X)  # fit does nothing.
+print('max norm')
+print(transformer.transform(X)) # Normalized vector has norm 1, of course
+
+
 n_scaler = preprocessing.Normalizer()
 df_n = n_scaler.fit_transform(df)
 

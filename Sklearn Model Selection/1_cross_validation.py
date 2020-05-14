@@ -47,6 +47,11 @@ scores = cross_val_score(
 print(scores)
 # sSee also cikit-learn.ppt
 
+#####
+# Cross-validation iterators
+#####
+
+
 # It is also possible to use other cross validation strategies by passing a cross validation iterator
 from sklearn.model_selection import ShuffleSplit
 n_samples = X.shape[0]
