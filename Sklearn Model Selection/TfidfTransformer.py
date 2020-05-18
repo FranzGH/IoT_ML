@@ -14,10 +14,10 @@ pipe = Pipeline([('count', CountVectorizer(vocabulary=vocabulary)),
                  ('tfid', TfidfTransformer())]).fit(corpus)
 print('Vectorizaion array') # Count of the vocabulary terms in the array
 print(pipe['count'].transform(corpus).toarray())
-print('idf') # Frequency of the terms
+print('idf') # inverse document frequency (IDF) vector, tf is term frequency
 print(pipe['tfid'].idf_)
 print('tfidf') # It's a sparse matrix
 tfidf = pipe.transform(corpus)
-print(tfidf)
+print(tfidf.toarray())
 print('tfidf shape')
 print(pipe.transform(corpus).shape)

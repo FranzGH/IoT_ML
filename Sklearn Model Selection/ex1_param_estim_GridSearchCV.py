@@ -34,6 +34,9 @@ for score in scores:
 
     clf = GridSearchCV(
         SVC(), tuned_parameters, scoring=f'{score}_macro', cv=5
+        # For integer/None inputs, if the estimator is a classifier and y is either binary or multiclass,
+        # StratifiedKFold is used.
+        # In all other cases, KFold is used.
     )
     clf.fit(X_train, y_train)
 

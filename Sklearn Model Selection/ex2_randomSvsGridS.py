@@ -16,7 +16,7 @@ X, y = load_digits(return_X_y=True)
 
 # build a classifier
 clf = SGDClassifier(loss='hinge', penalty='elasticnet',
-                    fit_intercept=True)
+                    fit_intercept=True) # This estimator implements regularized linear models with stochastic gradient descent (SGD) 
 
 
 # Utility function to report best scores
@@ -33,7 +33,7 @@ def report(results, n_top=3):
 
 
 # specify parameters and distributions to sample from
-param_dist = {'average': [True, False],
+param_dist = {'average': [True, False], # The hyper-parameter ranges
               'l1_ratio': stats.uniform(0, 1),
               #'alpha': loguniform(1e-4, 1e0)}
               'alpha': stats.reciprocal(1e-4, 1e0)}
@@ -42,6 +42,9 @@ param_dist = {'average': [True, False],
 n_iter_search = 20
 random_search = RandomizedSearchCV(clf, param_distributions=param_dist, # param_distribution vs param_grid
                                    n_iter=n_iter_search, cv=5)
+                  # For integer/None inputs, if the estimator is a classifier and y is either binary or multiclass,
+                  # StratifiedKFold is used.
+                  # In all other cases, KFold is used.
 
 start = time()
 random_search.fit(X, y)

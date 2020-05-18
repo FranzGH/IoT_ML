@@ -4,6 +4,8 @@
 # License: BSD 3 clause
 
 # Adapted by F. Bellotti
+
+# Classify the blog posts
 from pprint import pprint
 from time import time
 import logging
@@ -52,6 +54,7 @@ pipeline = Pipeline([
 # increase processing time in a combinatorial way
 parameters = {
     'vect__max_df': (0.5, 0.75, 1.0), # Remove terms that appear in too many documents https://stackoverflow.com/questions/27697766/understanding-min-df-and-max-df-in-scikit-countvectorizer
+    # Remove terms that appear in more than 50% of the documents, etc.
     # 'vect__max_features': (None, 5000, 10000, 50000),
     'vect__ngram_range': ((1, 1), (1, 2)),  # unigrams or bigrams
     # 'tfidf__use_idf': (True, False),

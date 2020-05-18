@@ -17,14 +17,16 @@ print("Recall: {:.2f} (+/- {:.2f})".format(scores.mean(), scores.std() * 2))
 
 
 clf = svm.SVC(random_state=0, gamma='auto')
-scores = cross_val_score(clf, X, y, cv=5, scoring='accuracy')
+scores = cross_val_score(clf, X, y, cv=5, scoring='accuracy') # Accuracy does not need '_macrp'
 print(scores)
 print("Accuracy: {:.2f} (+/- {:.2f})".format(scores.mean(), scores.std() * 2))
 
 X_bin, y_bin = datasets.make_classification(n_classes=2, random_state=0)
 # Not possible in multiclass problems
 clf = svm.SVC(random_state=0, gamma='auto')
-cross_val_score(clf, X_bin, y_bin, cv=5, scoring='recall')
+scores = cross_val_score(clf, X_bin, y_bin, cv=5, scoring='recall_macro')
+print(scores)
+print("Recall: {:.2f} (+/- {:.2f})".format(scores.mean(), scores.std() * 2))
 
 # ValueError: 'wrong_choice' is not a valid scoring value.
 # model = svm.SVC(gamma='auto')
@@ -66,11 +68,12 @@ score = make_scorer(my_custom_loss_func, greater_is_better=False)
 X = [[1], [1]]
 y = [0, 1]
 from sklearn.dummy import DummyClassifier
-clf = DummyClassifier(strategy='most_frequent', random_state=0)
+clf = DummyClassifier(strategy='most_frequent', random_state=0) # always predicts the most frequent label in the training set.
 clf = clf.fit(X, y)
-print(my_custom_loss_func(clf.predict(X), y))
+print(my_custom_loss_func(y, clf.predict(X)))
 
 print(score(clf, X, y)) # Here I use the scorer directly, not in CV
+# N.B. score automatically negated, as it is a loss
 
 #####
 # Using multiple metric evaluation
@@ -98,6 +101,8 @@ def tp(y_true, y_pred): return confusion_matrix(y_true, y_pred)[1, 1]
 scoring = {'tp': make_scorer(tp), 'tn': make_scorer(tn),
            'fp': make_scorer(fp), 'fn': make_scorer(fn)}
 cv_results = cross_validate(svm.fit(X, y), X, y, cv=5, scoring=scoring) # Before we saw cross_val_score
+# fit() returns the classifier itself
+
 # Getting the test set true positive scores
 print(cv_results['test_tp'])
 
@@ -119,6 +124,7 @@ y_pred = [0, 2, 1, 3]
 y_true = [0, 1, 2, 3]
 accuracy_score(y_true, y_pred)
 
+print('Accuracy score')
 print(accuracy_score(y_true, y_pred, normalize=False)) # 2
 print(accuracy_score(y_true, y_pred)) # .5
 # In the multilabel case with binary label indicators:
@@ -139,7 +145,7 @@ print(confusion_matrix(y_true, y_pred))
 
 y_true = [0, 0, 0, 1, 1, 1, 1, 1]
 y_pred = [0, 1, 0, 1, 0, 1, 0, 1]
-# print(confusion_matrix(y_true, y_pred, normalize='true'))
+#print(confusion_matrix(y_true, y_pred, normalize='true'))
 # normalize does not work
 
 # Binary problems only
@@ -164,12 +170,12 @@ print(classification_report(y_true, y_pred, target_names=target_names))
 ####
 
 from sklearn.metrics import hamming_loss
-y_pred = [1, 2, 3, 4]
-y_true = [2, 2, 3, 4]
-print(hamming_loss(y_true, y_pred))
+y_pred = [1, 2, 0, 4, 2, 5]
+y_true = [2, 2, 5, 4, 4, 5]
+print(hamming_loss(y_true, y_pred)) # .5
 
 # Multilable case. Hamming loss considers only one 
-print(hamming_loss(np.array([[0, 1], [1, 1]]), np.zeros((2, 2))))
+print(hamming_loss(np.array([[0, 1], [1, 1]]), np.zeros((2, 2)))) # .75
 
 ####
 # Binary classification
@@ -178,6 +184,7 @@ print('Binary classification')
 from sklearn import metrics
 y_pred = [0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1]
 y_true = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1]
+print(metrics.accuracy_score(y_true, y_pred))
 print(metrics.precision_score(y_true, y_pred))
 print(metrics.recall_score(y_true, y_pred))
 print(metrics.f1_score(y_true, y_pred))
@@ -210,7 +217,7 @@ y_true = np.array([[1, 0, 1],
 y_pred = np.array([[1, 0, 0],
                    [0, 1, 1]])
 print('Multilabel confusion matrix')
-print(multilabel_confusion_matrix(y_true, y_pred)) #N.B. Label by label
+print(multilabel_confusion_matrix(y_true, y_pred)) #N.B. Label by label (3 CMs)
 
 # Or a confusion matrix can be constructed for each sample’s labels
 print('Samplewise')
@@ -222,6 +229,7 @@ y_true = ["cat", "ant", "cat", "cat", "ant", "bird"]
 y_pred = ["ant", "ant", "cat", "cat", "ant", "cat"]
 print(multilabel_confusion_matrix(y_true, y_pred,
                             labels=["ant", "bird", "cat"])) # Similar, but not the same as confusion matrix (see above)
+                                                            # One CM per each class
 
 
 ####
@@ -231,22 +239,22 @@ print(multilabel_confusion_matrix(y_true, y_pred,
 import numpy as np
 from sklearn.metrics import roc_curve
 import matplotlib.pyplot as plt
-# y_true = np.array([1, 1, 2, 2])
-# scores = np.array([0.1, 0.4, 0.35, 0.8]) # probabilities, or confidence
-# fpr, tpr, thresholds = roc_curve(y_true, scores, pos_label=2)
-## If I accept 0 FP -> I get 1 TP out of 2
-## If I accept 1 FP -> I get 2 TP
+y_true = np.array([1,   1,   2,    2])
+scores = np.array([0.1, 0.4, 0.35, 0.8]) # probabilities, or confidence
+fpr, tpr, thresholds = roc_curve(y_true, scores, pos_label=2)
+## If I accept 0 FP out of 2 negatives, 0% FPR -> I get 1 TP out of 2
+## If I accept 1 FP, 0.5% FPR -> I get 2 TP
 
-# y_true= np.array([0, 0, 0, 0, 1, 1, 1, 1])
+# y_true= np.array ([0,   0,   0,   0,   1,   1,   1,   1])
 # scores = np.array([0.7, 0.1, 0.2, 0.5, 0.4, 0.3, 0.6, 0.3])
 # fpr, tpr, _ = roc_curve(y_true, scores)
-## If I accept 0 FP (0.7) -> I get 0 TP out of 4
-## If I accept 1 FP (0.5) -> I get 1 TP
-## If I accept 2 FP (0.2) -> I get 4 TP
+## If I accept 0 FP out of 4 negatives (@0.7), it's FPR = 0 -> I get 0 TP out of 4
+## If I accept 1 FP (0.5), it's FPR 0.25 -> I get 1 TP
+## If I accept 2 FP (0.2) it's FPR 0.5 -> I get 4 TP
 
-y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
-scores = np.array([0.7, 0.1, 0.2, 0.6, 0.4, 0.3, 0.7, 0.8, 0.5, 0.4])
-fpr, tpr, _ = roc_curve(y_true, scores)
+# y_true = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])
+# scores = np.array([0.7, 0.1, 0.2, 0.6, 0.4, 0.3, 0.7, 0.8, 0.5, 0.4])
+# fpr, tpr, _ = roc_curve(y_true, scores)
 plt.plot(fpr, tpr, color='orange', label='ROC')
 plt.plot([0, 1], [0, 1], color='darkblue', linestyle='--')
 plt.xlabel('False Positive Rate')
