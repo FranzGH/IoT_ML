@@ -15,6 +15,7 @@ X, y = make_blobs(n_samples=1000, centers=centers, random_state=40)
 transformation = [[0.4, 0.2], [-0.4, 1.2]]
 # transformation = [[1, 0], [0, 1]]
 X = np.dot(X, transformation)
+# https://www.tutorialspoint.com/numpy/numpy_dot.htm
 
 for multi_class in ('multinomial', 'ovr'):
     clf = LogisticRegression(solver='sag', max_iter=100, random_state=42,
