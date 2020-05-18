@@ -1,3 +1,31 @@
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
+
+import pandas as pd
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+# load dataset into Pandas DataFrame
+df = pd.read_csv(url, names=['sepal length','sepal width','petal length','petal width','target'])
+
+print(df.head())
+print(df.describe())
+
+from sklearn.preprocessing import StandardScaler
+features = ['sepal length', 'sepal width', 'petal length', 'petal width']
+# Separating out the features
+x = df.loc[:, features].values
+# Separating out the target
+y = df.loc[:,['target']].values # Access column by name
+# Standardizing the features
+x = StandardScaler().fit_transform(x)
+
+clf = LogisticRegression(solver='sag', max_iter=100, random_state=42,
+                             multi_class='multinomial').fit(x, y)
+
+print(clf.score(x, y))
+y_pred = clf.predict(x)
+print(metrics.confusion_matrix(y, y_pred))
+
 # https://scikit-learn.org/stable/auto_examples/linear_model/plot_logistic_multinomial.html#sphx-glr-auto-examples-linear-model-plot-logistic-multinomial-py
 
 print(__doc__)
