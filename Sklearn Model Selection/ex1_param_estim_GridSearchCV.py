@@ -46,7 +46,7 @@ for score in scores:
     print()
     print("Grid scores on development set:")
     print()
-    means = clf.cv_results_['mean_test_score']
+    means = clf.cv_results_['mean_test_score'] # For each candidate configuration
     stds = clf.cv_results_['std_test_score']
     for mean, std, params in zip(means, stds, clf.cv_results_['params']):
         print(f"{mean:.3f} (+/-{std * 2:.03f}) for {params}")

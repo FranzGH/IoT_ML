@@ -14,6 +14,8 @@ print(X_test.shape, y_test.shape)
 
 clf = svm.SVC(kernel='linear', C=1).fit(X_train, y_train)
 print(clf.score(X_test, y_test))
+print(clf.score(X_train, y_train))
+print(clf.score(X, y))
 
 ######
 # cross_val_score

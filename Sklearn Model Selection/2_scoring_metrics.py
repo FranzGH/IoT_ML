@@ -22,7 +22,6 @@ print(scores)
 print("Accuracy: {:.2f} (+/- {:.2f})".format(scores.mean(), scores.std() * 2))
 
 X_bin, y_bin = datasets.make_classification(n_classes=2, random_state=0)
-# Not possible in multiclass problems
 clf = svm.SVC(random_state=0, gamma='auto')
 scores = cross_val_score(clf, X_bin, y_bin, cv=5, scoring='recall_macro')
 print(scores)
@@ -46,7 +45,7 @@ grid.fit(X_bin, y_bin)
 print("Best parameters set found on development set:")
 print(grid.best_params_)
 print("Grid scores:")
-means = grid.cv_results_['mean_test_score'] # dictionary. One mean_test_score for every parameter (mean over cv iterations). One cv test ofr every parameter combination
+means = grid.cv_results_['mean_test_score'] # dictionary. One mean_test_score for every parameter value (mean over cv iterations). One cv test ofr every parameter combination
 stds = grid.cv_results_['std_test_score']
 for mean, std, params in zip(means, stds, grid.cv_results_['params']):
     print(f"{mean:.3f} (+/-{std * 2:.03f}) for {params}")
