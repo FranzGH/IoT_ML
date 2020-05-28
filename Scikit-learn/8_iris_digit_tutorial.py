@@ -64,10 +64,10 @@ iris = datasets.load_iris()
 clf = SVC(gamma='scale') # To avoid a future warning
 clf.fit(iris.data, iris.target)
 pr_list = list(clf.predict(iris.data[:3]))
-print(pr_list)
-clf.fit(iris.data, iris.target_names[iris.target])
+print(pr_list) # Numeric output
+clf.fit(iris.data, iris.target_names[iris.target]) # You can train with a categorical target
 pr_list = list(clf.predict(iris.data[:3]))
-print(pr_list)
+print(pr_list) # Categorical output
 
 myset = set(iris.target)
 print(myset)

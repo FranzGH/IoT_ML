@@ -57,13 +57,14 @@ plt.show()
 #Text(0.5,257.44,'Predicted label')
 
 # See scikit-learn.ppt file
-print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred)) # Biased by true negative
 print("Precision:",metrics.precision_score(y_test, y_pred))
 print("Recall:",metrics.recall_score(y_test, y_pred))
+print("F1 score:",metrics.f1_score(y_test, y_pred))
 
-# Roc curve, true positive vs false negative
+# Roc curve, true positive / positive (TPR) vs false positive / negative (FPR)
+# Model seection.pptx
 pred_prob = logreg.predict_proba(X_test) # For each sample, probabilities of each class
-#y_pred_proba = pred_prob[::,1] # cfr. y[::5] += 3 * (0.5 - rng.rand(16)) # Every 5 samples, 1 is added with noise
 y_pred_proba = pred_prob[:,1] # Prob of '1' value
 fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred_proba) # See model selection.ppt file, slide on the receiver operating curve
 auc = metrics.roc_auc_score(y_test, y_pred_proba) # auc is a score

@@ -59,7 +59,7 @@ for mean, std, params in zip(means, stds, grid.cv_results_['params']):
 import numpy as np
 def my_custom_loss_func(y_true, y_pred):
     diff = np.abs(y_true - y_pred).max()
-    return np.log1p(diff) # log(1+x)
+    return np.log1p(diff) # log(1+x) # log shifted to the left by 1
 
 # score will negate the return value of my_custom_loss_func,
 # which will be np.log(2), 0.693, given the values for X
@@ -74,6 +74,9 @@ print(my_custom_loss_func(y, clf.predict(X)))
 
 print(score(clf, X, y)) # Here I use the scorer directly, not in CV
 # N.B. score automatically negated, as it is a loss
+
+from sklearn.metrics import accuracy_score
+print(accuracy_score(clf.predict(X), y)) # Just to show a comparison
 
 #####
 # Using multiple metric evaluation
@@ -174,7 +177,7 @@ y_pred = [1, 2, 0, 4, 2, 5]
 y_true = [2, 2, 5, 4, 4, 5]
 print(hamming_loss(y_true, y_pred)) # .5
 
-# Multilable case. Hamming loss considers only one 
+# Multilable case. Hamming loss considers each label 
 print(hamming_loss(np.array([[0, 1], [1, 1]]), np.zeros((2, 2)))) # .75
 
 ####

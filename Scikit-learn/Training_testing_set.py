@@ -22,6 +22,6 @@ from sklearn.model_selection import train_test_split
 
 global data_train, data_test, target_train, target_test
 #split data set into train and test sets
-data_train, data_test, target_train, target_test = train_test_split(data,target, test_size = 0.30, random_state = 10)
+data_train, data_test, target_train, target_test = train_test_split(data, target, test_size = 0.30, random_state = 10)
 # The fourth argument ‘random_state’ just ensures that we get reproducible results every time.
 

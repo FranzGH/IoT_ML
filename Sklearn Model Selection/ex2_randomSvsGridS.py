@@ -34,7 +34,7 @@ def report(results, n_top=3):
 
 # specify parameters and distributions to sample from
 param_dist = {'average': [True, False], # The hyper-parameter ranges
-              'l1_ratio': stats.uniform(0, 1),
+              'l1_ratio': stats.uniform(0, 1), # l1 - l2 penalty
               #'alpha': loguniform(1e-4, 1e0)}
               'alpha': stats.reciprocal(1e-4, 1e0)}
 

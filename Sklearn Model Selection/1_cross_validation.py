@@ -40,6 +40,7 @@ scores = cross_val_score(
 # StratifiedKFold is the cross validation iterator used by default for classification problems if y is binary/multiclass.
 # Otherwise, KFold 
 # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html?highlight=cross_val_score#sklearn.model_selection.cross_val_score
+
 print(scores)
 print("f1_score: {:.2f} (+/- {:.2f})".format(scores.mean(), scores.std() * 2))
 # See also scikit-learn.ppt for accuracy, precision, f1, etc.

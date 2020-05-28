@@ -10,6 +10,7 @@ def cost_function(radio, sales, weight, bias):
         total_error += (sales[i] - (weight*radio[i] + bias))**2
     return total_error / companies
 
+# https://ml-cheatsheet.readthedocs.io/en/latest/gradient_descent.html
 def update_weights(radio, sales, weight, bias, learning_rate):
     weight_deriv = 0
     bias_deriv = 0
@@ -140,21 +141,21 @@ def update_weights(features, targets, weights, lr):
     return weights
 
 
-def train(radio, sales, weight, bias, iters, learning_rate):
+def train(features, labels, weights, lr, iters):
     cost_history = []
 
     for i in range(iters):
-        weight,bias = update_weights(radio, sales, weight, learning_rate)
+        weights = update_weights(features, labels, weights, lr)
 
-        #Calculate cost for auditing purposes
-        cost = cost_function(features, targets, weights)
+        #Calculate error for auditing purposes
+        cost = cost_function(features, labels, weights)
         cost_history.append(cost)
 
         # Log Progress
-        if i % 10 == 0:
-            print("iter={:d}    weight={:.2f}    bias={:.4f}    cost={:.2}".format(i, weight, bias, cost))
+        if i % 1000 == 0:
+            print "iter: "+str(i) + " cost: "+str(cost)
 
-    return weight, bias, cost_history
+    return weights, cost_history
 
 W1 = 0.0
 W2 = 0.0
