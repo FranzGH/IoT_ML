@@ -9,9 +9,6 @@ from sklearn.model_selection import cross_val_score
 X, y = datasets.load_iris(return_X_y=True)
 print(X.shape, y.shape)
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.4, random_state=0)
-
 # Data transformation with held out data
 from sklearn import preprocessing
 X_train, X_test, y_train, y_test = train_test_split(
@@ -65,13 +62,12 @@ from sklearn import feature_selection
 from sklearn.linear_model import Ridge
 n_features_to_test = np.arange(1, 3)
 alpha_to_test = 2.0**np.arange(-6, +6)
-
 scalers_to_test = [preprocessing.StandardScaler(), preprocessing.RobustScaler(), preprocessing.QuantileTransformer()]
 
 params = [
         {'scaler': scalers_to_test,
          'reduce_dim': [decomposition.PCA()], # Parameter of the parameter
-         'reduce_dim__n_components': n_features_to_test,\ 
+         'reduce_dim__n_components': n_features_to_test,
          'regressor__alpha': alpha_to_test}, # Parameter of the parameter
 
         {'scaler': scalers_to_test,

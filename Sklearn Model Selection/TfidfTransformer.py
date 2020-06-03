@@ -14,10 +14,10 @@ pipe = Pipeline([('count', CountVectorizer(vocabulary=vocabulary)),
                  ('tfid', TfidfTransformer())]).fit(corpus)
 print('Vectorizaion array') # Count of the vocabulary terms in the array
 print(pipe['count'].transform(corpus).toarray())
-print('idf') # inverse document frequency (IDF) vector, How much (from 1 on) a word is significant to identfy a document in the corpus    # tf is term frequency
+print('idf') # inverse document frequency (IDF) vector (of a word in the corpus). How rare (from 1 on) a word is in the corpus    # tf is term frequency in a document
 print(pipe['tfid'].idf_)
 print('tfidf') # It's a sparse matrix
 tfidf = pipe.transform(corpus)
-print(tfidf.toarray()) # For each term, its relevance for the current document
+print(tfidf.toarray()) # For each term, its relevance for the current document (product of how frequent is the term in the document * how rare is in the corpus)
 print('tfidf shape')
 print(pipe.transform(corpus).shape) # (4, 8)

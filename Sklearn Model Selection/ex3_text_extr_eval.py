@@ -56,7 +56,7 @@ parameters = {
     'vect__max_df': (0.5, 0.75, 1.0), # Remove terms that appear in too many documents https://stackoverflow.com/questions/27697766/understanding-min-df-and-max-df-in-scikit-countvectorizer
     # Remove terms that appear in more than 50% of the documents, etc.
     # 'vect__max_features': (None, 5000, 10000, 50000),
-    'vect__ngram_range': ((1, 1), (1, 2)),  # unigrams or bigrams
+    'vect__ngram_range': ((1, 1), (1, 2)),  # unigrams only, unigrams or bigrams
     # 'tfidf__use_idf': (True, False),
     # 'tfidf__norm': ('l1', 'l2'),
     'clf__max_iter': (20,),
@@ -87,3 +87,10 @@ if __name__ == "__main__":
     best_parameters = grid_search.best_estimator_.get_params()
     for param_name in sorted(parameters.keys()):
         print("\t%s: %r" % (param_name, best_parameters[param_name]))
+
+    # What is the vocabulary?
+    #print(grid_search.best_estimator_['vect'].get_feature_names())
+
+    # How to get predictions?
+    preds = grid_search.predict(data.data[0:10])
+    print([data.target_names[p] for p in preds])
