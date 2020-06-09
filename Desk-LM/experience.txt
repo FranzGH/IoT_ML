@@ -1,0 +1,23 @@
+
+https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+
+https://code.visualstudio.com/docs/python/environments 
+
+You need to activate the environment!
+https://medium.com/@udiyosovzon/how-to-activate-conda-environment-in-vs-code-ce599497f20d 
+
+Install package in conda environment
+https://stackoverflow.com/questions/33680946/how-to-add-package-to-conda-environment-without-pip#:~:text=You%20can%20install%20a%20conda,%2Fenv%3E%20.&text=If%20you%20want%20to%20install,can%20use%20the%20following%20command.
+
+https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+
+Executing transaction: \ b"\n\n  INSTALLED PACKAGE OF SCIKIT-LEARN CAN BE ACCELERATED USING DAAL4PY. \n\n  PLEASE SET 'USE_DAAL4PY_SKLEARN' ENVIRONMENT VARIABLE TO 'YES' TO ENABLE THE ACCELERATION. \n\n  FOR EXAMPLE:\n\n      $ set USE_DAAL4PY_SKLEARN=YES\n      $ python -c 'import sklearn'\n\n"
+
+conda install pandas
+https://github.com/numpy/numpy/issues/14747 pip needed to install numpy
+https://stackoverflow.com/questions/52612657/sklearn-importerror-dll-load-failed-the-specified-module-could-not-be-found uninstall scipy with conda and install with pip
+
+https://pymotw.com/3/abc/
+
+export import
+https://medium.com/@shandou/export-and-create-conda-environment-with-yml-5de619fe5a2

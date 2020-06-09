@@ -1,0 +1,15 @@
+pyuthon 3.7.7, 64-amd - custom, with PATH, and pip
+https://www.python.org/downloads/windows/
+
+64 bit graphical installer
+https://www.anaconda.com/products/individual
+
+conda no PATH
+D:\Checo\Conda\condabin\conda env create -f D:\Checo\Programs\Python\environment_DeskLM.yml
+
+conda activate 
+https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file
+
+https://medium.com/@shandou/export-and-create-conda-environment-with-yml-5de619fe5a2
+
+

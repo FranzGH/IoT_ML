@@ -9,3 +9,10 @@ Sklearn-UG/Datasets/mnist-original.mat
 X2604-K-11.png
 ~$Model selection.pptx
 ~$ML intro.pptx
+Desk-LM/__pycache__/
+Desk-LM/config/__pycache__/cfg_dataset.cpython-37.pyc
+Desk-LM/config/__pycache__/
+Desk-LM/out/ds_heart/include/dt/DT_params.h
+Desk-LM/out/
+Desk-LM/output/__pycache__/
+Desk-LM/utils/__pycache__/
